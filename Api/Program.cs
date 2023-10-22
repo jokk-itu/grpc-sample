@@ -1,4 +1,5 @@
 using Serilog;
+using Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -7,6 +8,7 @@ var services = builder.Services;
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
+services.AddGrpc();
 
 var serilogConfiguration = configuration.GetSection("Serilog");
 Log.Logger = new LoggerConfiguration()
@@ -28,7 +30,7 @@ try
   app.UseSwaggerUI();
   app.UseSerilogRequestLogging();
   app.UseAuthorization();
-  app.MapControllers();
+  app.MapGrpcService<WeatherService>();
   app.Run();
 }
 catch(Exception e)

@@ -1,0 +1,20 @@
+﻿syntax = "proto3";
+package weather;
+
+option csharp_namespace = "Api.Contracts.Weather";
+
+import "google/protobuf/empty.proto";
+
+service Weather {
+	rpc GetWeather(google.protobuf.Empty) returns(stream WeatherResponse);
+	rpc GetCountryWeather(WeatherRequest) returns(WeatherResponse);
+}
+
+message WeatherResponse {
+	string name = 1;
+	int32 temperature = 2;
+}
+
+message WeatherRequest {
+	string country = 1;
+}
