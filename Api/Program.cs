@@ -6,9 +6,8 @@ var configuration = builder.Configuration;
 var services = builder.Services;
 
 services.AddControllers();
-services.AddEndpointsApiExplorer();
-services.AddSwaggerGen();
 services.AddGrpc();
+services.AddSerilog();
 
 var serilogConfiguration = configuration.GetSection("Serilog");
 Log.Logger = new LoggerConfiguration()
@@ -26,8 +25,6 @@ Log.Logger = new LoggerConfiguration()
 try
 {
   var app = builder.Build();
-  app.UseSwagger();
-  app.UseSwaggerUI();
   app.UseSerilogRequestLogging();
   app.UseAuthorization();
   app.MapGrpcService<WeatherService>();
